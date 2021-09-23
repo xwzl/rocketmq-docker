@@ -19,8 +19,7 @@ RUN yum install -y java-1.8.0-openjdk-devel.x86_64 unzip gettext nmap-ncat opens
 
 Dockerfile-macos
 
-注意 azul-jdk.zip 解压后文件层级为 jdk/jdk ，如果下载的 jdk 压缩包解压后的文件不是 jdk ,
-注意 mv ./jdk/zulu8.56.0.23-ca-jdk8.0.302-macosx_aarch64 java 命令的正确性，不同 jdk 版本解压后的文件不一样。
+注意 azul-jdk.zip 解压后文件层级为 jdk/jdk ，如果下载的 jdk 压缩包解压后的文件不是 jdk ,特别注意该 jdk 为 Oracle arrch64 jdk;
 
 ```
 # 安装 zip 插件
@@ -35,8 +34,8 @@ ENV JRE_HOME /usr/local/java/jre
 ENV PATH $JAVA_HOME/bin:$PATH
 ```
 
-# azul-jdk.zip 包
+# oracle arrch 64 jdk.zip 包
 
 下载好后，放在当前目录即可
 
-链接: https://pan.baidu.com/s/1boFSQb7nvKScEcnig9-obw 提取码: enwm
+链接: https://pan.baidu.com/s/1p1evXu5DmV03MuL8fSqPew 提取码: dh88
