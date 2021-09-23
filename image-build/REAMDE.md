@@ -40,3 +40,5 @@ ENV PATH $JAVA_HOME/bin:$PATH
 下载好后，放在当前目录即可
 
 链接: https://pan.baidu.com/s/1p1evXu5DmV03MuL8fSqPew 提取码: dh88
+
+# centos 下载过慢，建议使用 alpine
