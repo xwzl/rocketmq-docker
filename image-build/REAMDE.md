@@ -19,16 +19,17 @@ RUN yum install -y java-1.8.0-openjdk-devel.x86_64 unzip gettext nmap-ncat opens
 
 Dockerfile-macos
 
-注意 azul-jdk.zip 解压后文件层级为 jdk/jdk ，如果下载的 jdk 压缩包解压后的文件不是 jdk ,特别注意该 jdk 为 Oracle arrch64 jdk;
+注意 jdk.zip 解压后文件层级为 jdk/jdk ，如果下载的 jdk 压缩包解压后的文件不是 jdk ,特别注意该 jdk 为 Oracle arrch64 jdk;
 
 ```
 # 安装 zip 插件
 RUN yum install -y unzip && yum clean all -y
-  # 添加 jdk jar 包
-ADD azul-jdk.zip /usr/local
-  # 移动 jdk jar 包到自定位置,jak 解压缩后的包在 jdk 中，此版本只适用于 m1 芯片
-RUN  cd /usr/local && unzip azul-jdk.zip -d jdk && mv ./jdk/java java;
+# 添加 jdk jar 包
+ADD jdk.zip /usr/local
+# 移动 jdk jar 包到自定位置,jak 解压缩后的包在 jdk 中，此版本只适用于 m1 芯片
+RUN  cd /usr/local && unzip jdk.zip -d jdk && mv ./jdk/jdk java;
 
+# 配置环境变量
 ENV JAVA_HOME /usr/local/java
 ENV JRE_HOME /usr/local/java/jre
 ENV PATH $JAVA_HOME/bin:$PATH
