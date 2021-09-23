@@ -44,6 +44,9 @@ case "${BASE_IMAGE}" in
     centos)
         docker build --no-cache -f Dockerfile-centos -t apacherocketmq/rocketmq:${ROCKETMQ_VERSION} --build-arg version=${ROCKETMQ_VERSION} .
     ;;
+    m1-macos)
+          docker build --no-cache -f Dockerfile-macos -t apacherocketmq/rocketmq:${ROCKETMQ_VERSION} --build-arg version=${ROCKETMQ_VERSION} .
+      ;;
     *)
         echo "${BASE_IMAGE} is not supported, supported base images: centos, alpine"
         exit -1
