@@ -34,3 +34,9 @@ ENV JAVA_HOME /usr/local/java
 ENV JRE_HOME /usr/local/java/jre
 ENV PATH $JAVA_HOME/bin:$PATH
 ```
+
+# azul-jdk.zip 包
+
+下载好后，放在当前目录即可
+
+链接: https://pan.baidu.com/s/1boFSQb7nvKScEcnig9-obw 提取码: enwm
