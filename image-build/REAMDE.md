@@ -42,3 +42,8 @@ ENV PATH $JAVA_HOME/bin:$PATH
 链接: https://pan.baidu.com/s/1p1evXu5DmV03MuL8fSqPew 提取码: dh88
 
 # centos 下载过慢，建议使用 alpine
+
+# windows 目录下制作镜像
+
+        sed -i 's/\r//' rocketmq/bin/runserver.sh;\
+        sed -i 's/\r//' rocketmq/bin/runbroker.sh;
