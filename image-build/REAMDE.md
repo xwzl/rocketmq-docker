@@ -45,5 +45,12 @@ ENV PATH $JAVA_HOME/bin:$PATH
 
 # windows 目录下制作镜像
 
-        sed -i 's/\r//' rocketmq/bin/runserver.sh;\
-        sed -i 's/\r//' rocketmq/bin/runbroker.sh;
+下载速度过慢，直接替换为本地加载
+
+```shell
+ADD rocketmq-all-4.9.3-bin-release.zip   /home/rocketmq/rocketmq.zip
+
+RUN cd /home/rocketmq/;\
+    unzip rocketmq.zip ; \
+    rm rocketmq.zip;
+```    
