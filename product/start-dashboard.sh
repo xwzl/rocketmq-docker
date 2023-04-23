@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -15,41 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+ROCKETMQ_DASHBOARD_VERSION=$1
 
-## Main
-if [ $# -lt 3 ]; then
-    echo "Usage: sh $0 DATA_HOME ROCKETMQ_VERSION BASE_IMAGE"
-    exit -1
-fi
-
-DATA_HOME=$1
-ROCKETMQ_VERSION=$2
-BASE_IMAGE=$3
-
-## Show Env Setting
-echo "ENV Setting: "
-echo "DATA_HOME=${DATA_HOME} ROCKETMQ_VERSION=${ROCKETMQ_VERSION}"
-
-# Start nameserver
-start_namesrv()
-{
-    TAG_SUFFIX=$1
-    docker run -d -v ${DATA_HOME}/logs:/home/rocketmq/logs \
-      --name rmqnamesrv \
-      -p 9876:9876 \
-      apache/rocketmq:${ROCKETMQ_VERSION}${TAG_SUFFIX} \
-      sh mqnamesrv
-}
-
-case "${BASE_IMAGE}" in
-    alpine)
-        start_namesrv -alpine
-    ;;
-    centos)
-        start_namesrv
-    ;;
-    *)
-        echo "${BASE_IMAGE} is not supported, supported base images: centos, alpine"
-        exit -1
-    ;;
-esac
+docker run -d -it --name rocketmq-dashboard -p 6765:8080 apache/rocketmq-dashboard:${ROCKETMQ_DASHBOARD_VERSION}-centos

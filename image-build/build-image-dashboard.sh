@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -15,35 +15,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-checkVersion()
-{
+checkVersion() {
     echo "Version = $1"
 	echo $1 |grep -E "^[0-9]+\.[0-9]+\.[0-9]+" > /dev/null
     if [ $? = 0 ]; then
-        return 0
+        return 1
     fi
 
 	echo "Version $1 illegal, it should be X.X.X format(e.g. 4.5.0), please check released versions in 'https://archive.apache.org/dist/rocketmq/'"
     exit -1
 }
 
-set -eu;
+if [ $# -lt 2 ]; then
+    echo -e "Usage: sh $0 Version BaseImage"
+    exit -1
+fi
 
-# Update the image of the latest released version
-LATEST_VERSION=$(curl -s https://archive.apache.org/dist/rocketmq/ | awk -F '>' '{print $3}' | awk -F '/' '{print $1}' | grep '^[0-9]' | sort | tail -1)
+ROCKETMQ_DASHBOARD_VERSION=$1
+BASE_IMAGE=$2
 
-checkVersion ${LATEST_VERSION}
+checkVersion $ROCKETMQ_DASHBOARD_VERSION
 
-baseImages=("alpine" "centos")
+# Build rocketmq
+case "${BASE_IMAGE}" in
+    centos)
+        docker build --no-cache -f Dockerfile-centos-dashboard -t apache/rocketmq-dashboard:${ROCKETMQ_DASHBOARD_VERSION}-centos --build-arg version=${ROCKETMQ_DASHBOARD_VERSION} .
+    ;;
+    *)
+        echo "${BASE_IMAGE} is not supported, supported base images: centos"
+        exit -1
+    ;;
+esac
 
-for baseImage in ${baseImages[@]}
-do
-    echo "Building image of version ${LATEST_VERSION}, base-image ${baseImage}"
-    bash build-image.sh ${LATEST_VERSION} ${baseImage}
-    if [ "${baseImage}" = "centos" ];then
-        TAG=${LATEST_VERSION}
-    else
-        TAG=${LATEST_VERSION}-${baseImage}
-    fi
-    docker push apache/rocketmq:${TAG}
-done
